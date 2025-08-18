@@ -9,13 +9,14 @@
 		if (!call.to.email || !call.from.name) return ''
 		const to = call.to.email
 		const subject = `Appel de ${call.from.name}`
-		let body = `Salut,\n${call.from.name}`
+		let body = `Salut,\n\n${call.from.name} `
 		if (!call.subject) {
-			body += ` souhaite de te contacter par téléphone.\n\n`
+			body += 'a tenter de te contacter par téléphone.'
 		} else {
-			body += ` souhaite de te contacter à ce sujet :\n\n${call.subject}`
+			body += 'souhaite de te contacter à ce sujet :\n\n\t'
+			body += call.subject.replaceAll('\n', '\n\t')
 		}
-		body += 'Cordialement\nJonas Voisard (Le nouveau civiliste admin)'
+		body += '\n\nCordialement\n\nJonas Voisard (Le nouveau civiliste admin)'
 
 		return encodeURI(`mailto:${to}?subject=${subject}&body=${body}`)
 	}

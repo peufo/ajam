@@ -13,7 +13,7 @@
 		to: {
 			name: '',
 			tel: '',
-			email: ''
+			email: 'prout@gmail.com'
 		}
 	}
 
@@ -36,7 +36,6 @@
 			<legend class="fieldset-legend">From</legend>
 			<div class="grid grid-cols-2 gap-2">
 				<input
-					autofocus
 					type="text"
 					class="input"
 					placeholder="Name"
