@@ -17,7 +17,6 @@
 			body += call.subject.replaceAll('\n', '\n\t')
 		}
 		body += '\n\nCordialement\n\nJonas Voisard (Le nouveau civiliste admin)'
-
 		return encodeURI(`mailto:${to}?subject=${subject}&body=${body}`)
 	}
 </script>

@@ -1,9 +1,10 @@
 export type User = {
 	name: string
 	tel: string
+	birthday: string
 }
 
-export type Employ = User & {
+export type Employ = Omit<User, 'birthday'> & {
 	email: string
 }
 
@@ -15,4 +16,9 @@ export type Call = {
 
 export type CallArchived = Call & {
 	createdAt: Date
+}
+
+export type Entry = {
+	user: User
+	employ: Employ
 }
