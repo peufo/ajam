@@ -1,15 +1,15 @@
 <script lang="ts">
-	import CallForm from '$lib/call/CallForm.svelte'
+	import PhoneForm from '$lib/phone/PhoneForm.svelte'
 	import { parseCSV } from '$lib/parseCSV'
-	import SearchClient from '$lib/SearchItems.svelte'
+	import SearchItem from '$lib/SearchItems.svelte'
 	import type { Item } from '$lib/types'
 	import { Inbox, PhoneIncoming } from '@lucide/svelte'
 	import { onMount } from 'svelte'
 	import type { FormEventHandler } from 'svelte/elements'
 
 	let action = $state<'phoneIncoming' | 'mailIncoming'>('phoneIncoming')
-
 	let items = $state<Item[]>([])
+	let phoneForm = $state<PhoneForm>()
 
 	onMount(() => {
 		function handleShortcut(event: KeyboardEvent) {
@@ -37,11 +37,17 @@
 		const content = await file.text()
 		items = parseCSV(content)
 	}
+
+	function onSelectItem(item: Item) {
+		if (action === 'phoneIncoming') {
+			phoneForm?.setItem(item)
+		}
+	}
 </script>
 
 <main class="flex h-screen items-start gap-4 p-4">
 	<div class="flex h-full flex-col gap-6">
-		<SearchClient {items} />
+		<SearchItem {items} {onSelectItem} />
 		<input type="file" class="file-input m-2" oninput={handleInputFile} />
 	</div>
 
@@ -71,7 +77,7 @@
 		</div>
 
 		{#if action === 'phoneIncoming'}
-			<CallForm />
+			<PhoneForm bind:this={phoneForm} />
 		{:else if action === 'mailIncoming'}
 			<span>TODO</span>
 		{/if}

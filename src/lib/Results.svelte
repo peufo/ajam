@@ -1,27 +1,35 @@
 <script lang="ts">
 	import type { FuseResult } from 'fuse.js'
-	import type { Item, ItemClient } from './types'
+	import type { Item } from './types'
 	import { Cake, Phone, SquareUserRound, User } from '@lucide/svelte'
 	import Highlight from './Highlight.svelte'
 
-	let { results, focusIndex = $bindable() }: { results: FuseResult<Item>[]; focusIndex: number } =
-		$props()
+	let {
+		results,
+		focusIndex = $bindable(),
+		onSelectItem
+	}: {
+		results: FuseResult<Item>[]
+		focusIndex: number
+		onSelectItem: (item: Item) => void
+	} = $props()
 </script>
 
 <div class="flex min-h-0 flex-col gap-4">
-	{#each results.slice(0, 20) as { matches, item }, index}
+	{#each results.slice(0, 20) as { matches, item }, index (item.id)}
 		{@const isSelected = index === focusIndex}
 
 		{#if item.type === 'client'}
 			{@const { client, employe } = item}
-			<!-- svelte-ignore a11y_no_static_element_interactions -->
-			<div
+			<button
 				onmouseenter={() => (focusIndex = index)}
+				onfocus={() => (focusIndex = index)}
+				onclick={() => onSelectItem(item)}
 				class="rounded-md border border-base-300 bg-base-100 px-4 py-2 shadow ring-accent"
 				class:shadow-lg={isSelected}
 				class:ring={isSelected}
 			>
-				<h4 class="mb-1 flex font-bold">
+				<h4 class="mb-1 flex items-center font-bold">
 					<User class="h-5 opacity-70" />
 					<Highlight key="client.name" value={client.name} {matches} />
 				</h4>
@@ -48,7 +56,7 @@
 						{employe.phone}
 					</div>
 				</div>
-			</div>
+			</button>
 		{/if}
 	{:else}
 		<div class="grid place-content-center opacity-40 bg-base-200 min-h-32 rounded-md font-light">

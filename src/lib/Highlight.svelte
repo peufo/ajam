@@ -35,6 +35,8 @@
 		class={isMatch
 			? 'rounded-xs bg-accent/40 text-accent-content dark:bg-accent/60 dark:text-base-content'
 			: ''}
+		class:ml-1={value.startsWith(' ')}
+		class:mr-1={value.endsWith(' ')}
 	>
 		{value}
 	</span>

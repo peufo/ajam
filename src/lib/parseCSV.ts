@@ -42,8 +42,9 @@ export function parseCSV(content: string): Item[] {
 	const useCell = (row: string[]) => (key: Column) => row[cols[key]]
 	const getName = (cell: Cell) => `${cell('firstName')} ${cell('lastName')}`.replace(/\(\w+\) /, '')
 
-	const parser: { [T in Item['type']]: (cell: Cell) => Item & { type: T } } = {
-		employe: (cell) => ({
+	const parser: { [T in Item['type']]: (cell: Cell, id: number) => Item & { type: T } } = {
+		employe: (cell, id) => ({
+			id,
 			type: 'employe',
 			employe: {
 				name: getName(cell),
@@ -52,7 +53,8 @@ export function parseCSV(content: string): Item[] {
 				birthday: cell('birthday')
 			}
 		}),
-		address: (cell) => ({
+		address: (cell, id) => ({
+			id,
 			type: 'address',
 			address: {
 				name: cell('firstName'),
@@ -61,7 +63,8 @@ export function parseCSV(content: string): Item[] {
 				city: cell('city')
 			}
 		}),
-		client: (cell) => ({
+		client: (cell, id) => ({
+			id,
 			type: 'client',
 			client: {
 				name: getName(cell),
@@ -79,6 +82,7 @@ export function parseCSV(content: string): Item[] {
 	}
 
 	const items: Item[] = []
+	let id = 0
 	for (const row of rows) {
 		const cell = useCell(row.split(';'))
 		const type = valueToEntryType[cell('type')]
@@ -86,7 +90,7 @@ export function parseCSV(content: string): Item[] {
 			// console.warn(`The value "${row[typeIndex]}" can't be parsed on entryType`)
 			continue
 		}
-		items.push(parser[type](cell))
+		items.push(parser[type](cell, id++))
 	}
 
 	// lookup employ fields in clients

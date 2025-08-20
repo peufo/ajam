@@ -6,7 +6,7 @@
 	import { Search } from '@lucide/svelte'
 	import { onMount } from 'svelte'
 
-	let { items }: { items: Item[] } = $props()
+	let { items, onSelectItem }: { items: Item[]; onSelectItem: (item: Item) => void } = $props()
 
 	const options: IFuseOptions<Item> = {
 		keys: ['client.name', 'client.phone', 'client.birthday', 'employe.name'],
@@ -33,6 +33,12 @@
 	onMount(() => {
 		function handleShortcut(event: KeyboardEvent) {
 			const { metaKey, ctrlKey, key } = event
+			if (key === 'Enter') {
+				event.preventDefault()
+				onSelectItem(results[focusIndex].item)
+				return
+			}
+
 			if ((metaKey || ctrlKey) && key === 'k') {
 				searchInput?.select()
 				return
@@ -74,5 +80,5 @@
 		<kbd class="kbd kbd-xs text-base-content/50">⌘ K</kbd>
 	</label>
 
-	<Results {results} bind:focusIndex />
+	<Results {results} {onSelectItem} bind:focusIndex />
 </div>

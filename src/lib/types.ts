@@ -12,13 +12,13 @@ export type Address = {
 	city: string
 }
 
-export type Call = {
+export type Phone = {
 	subject: string
 	from: User
 	to: User
 }
 
-export type CallArchived = Call & {
+export type PhoneArchived = Phone & {
 	createdAt: Date
 }
 
@@ -38,4 +38,6 @@ export type ItemAddress = {
 	address: Address
 }
 
-export type Item = ItemClient | ItemEmploye | ItemAddress
+export type Item = (ItemClient | ItemEmploye | ItemAddress) & {
+	id: number
+}
