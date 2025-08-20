@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { FuseResult } from 'fuse.js'
-	import type { Entry } from './types'
+	import type { Item } from './types'
 	import { Cake, Phone, SquareUserRound } from '@lucide/svelte'
 	import Highlight from './Highlight.svelte'
 
-	let { results, focusIndex = $bindable() }: { results: FuseResult<Entry>[]; focusIndex: number } =
+	let { results, focusIndex = $bindable() }: { results: FuseResult<Item>[]; focusIndex: number } =
 		$props()
 </script>
 

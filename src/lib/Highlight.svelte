@@ -31,7 +31,11 @@
 </script>
 
 {#each spans as { value, isMatch }}
-	<span class={isMatch ? 'rounded-xs bg-accent/50 text-accent-content' : ''}>
+	<span
+		class={isMatch
+			? 'rounded-xs bg-accent/40 text-accent-content dark:bg-accent/60 dark:text-base-content'
+			: ''}
+	>
 		{value}
 	</span>
 {/each}

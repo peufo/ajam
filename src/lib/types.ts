@@ -22,21 +22,20 @@ export type CallArchived = Call & {
 	createdAt: Date
 }
 
-export type EntryClient = {
+export type ItemClient = {
 	type: 'client'
 	client: User
 	employ: User
 }
 
-export type EntryEmploy = {
+export type ItemEmploye = {
 	type: 'employe'
-	employ: User
+	employe: User
 }
 
-export type EntryAddress = {
+export type ItemAddress = {
 	type: 'address'
 	address: Address
 }
 
-export type Entry = EntryClient | EntryEmploy | EntryAddress
-export type EntryType = Entry['type']
+export type Item = ItemClient | ItemEmploye | ItemAddress

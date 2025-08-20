@@ -1,10 +1,15 @@
 <script lang="ts">
 	import CallForm from '$lib/call/CallForm.svelte'
-	import SearchClient from '$lib/SearchClient.svelte'
+	import { parseCSV } from '$lib/parseCSV'
+	import SearchClient from '$lib/SearchItems.svelte'
+	import type { Item } from '$lib/types'
 	import { Inbox, PhoneIncoming } from '@lucide/svelte'
 	import { onMount } from 'svelte'
+	import type { FormEventHandler } from 'svelte/elements'
 
 	let action = $state<'phoneIncoming' | 'mailIncoming'>('phoneIncoming')
+
+	let items = $state<Item[]>([])
 
 	onMount(() => {
 		function handleShortcut(event: KeyboardEvent) {
@@ -25,10 +30,20 @@
 			window.removeEventListener('keydown', handleShortcut)
 		}
 	})
+
+	const handleInputFile: FormEventHandler<HTMLInputElement> = async (event) => {
+		const [file] = event.currentTarget.files ?? []
+		if (!file) return
+		const content = await file.text()
+		items = parseCSV(content)
+	}
 </script>
 
-<main class="flex items-start gap-6 p-4">
-	<SearchClient />
+<main class="flex h-screen items-start gap-6 p-4">
+	<div class="flex h-full flex-col gap-6">
+		<SearchClient {items} />
+		<input type="file" class="file-input w-full" oninput={handleInputFile} />
+	</div>
 
 	<div class="flex flex-col gap-6">
 		<div role="tablist" class="tabs-border tabs gap-2">
