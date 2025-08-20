@@ -47,7 +47,7 @@
 		<CallActions {call}>
 			<button class="btn col-span-2" onclick={archiveCall}>
 				<Archive class="h-5" />
-				Archive
+				Archiver
 			</button>
 		</CallActions>
 	</div>

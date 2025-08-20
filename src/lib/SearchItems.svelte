@@ -9,10 +9,11 @@
 	let { items }: { items: Item[] } = $props()
 
 	const options: IFuseOptions<Item> = {
-		keys: ['client.name', 'client.phone', 'client.birthday', 'employ.name'],
+		keys: ['client.name', 'client.phone', 'client.birthday', 'employe.name'],
 		includeMatches: true,
 		minMatchCharLength: 1,
-		includeScore: true
+		includeScore: true,
+		threshold: 0.6
 	}
 
 	let fuse = new Fuse([], options)
@@ -60,8 +61,8 @@
 	}
 </script>
 
-<div class="w-sm grow">
-	<label class="input mb-6 w-full">
+<div class="min-h-0 w-sm grow overflow-auto p-2">
+	<label class="input sticky top-0 z-10 mb-6 w-full bg-base-100/50 backdrop-blur-xs">
 		<Search class="h-5 opacity-70" />
 		<input
 			bind:this={searchInput}

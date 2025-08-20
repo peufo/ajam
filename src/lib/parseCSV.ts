@@ -66,10 +66,10 @@ export function parseCSV(content: string): Item[] {
 			client: {
 				name: getName(cell),
 				email: cell('email'),
-				phone: cell('phone') || cell('phone2'),
+				phone: cell('phone').trim() || cell('phone2').trim(),
 				birthday: cell('birthday')
 			},
-			employ: {
+			employe: {
 				name: cell('manager').replace(/\(\w+\) /, ''),
 				email: '',
 				phone: '',
@@ -93,10 +93,10 @@ export function parseCSV(content: string): Item[] {
 	for (const item of items) {
 		if (item.type === 'client') {
 			const itemEmploye = items.find(
-				(el) => el.type === 'employe' && el.employe.name === item.employ.name
+				(el) => el.type === 'employe' && el.employe.name === item.employe.name
 			) as ItemEmploye | undefined
 			if (itemEmploye) {
-				item.employ = itemEmploye.employe
+				item.employe = itemEmploye.employe
 			}
 		}
 	}

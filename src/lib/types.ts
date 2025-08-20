@@ -25,7 +25,7 @@ export type CallArchived = Call & {
 export type ItemClient = {
 	type: 'client'
 	client: User
-	employ: User
+	employe: User
 }
 
 export type ItemEmploye = {

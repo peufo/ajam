@@ -39,13 +39,13 @@
 	}
 </script>
 
-<main class="flex h-screen items-start gap-6 p-4">
+<main class="flex h-screen items-start gap-4 p-4">
 	<div class="flex h-full flex-col gap-6">
 		<SearchClient {items} />
-		<input type="file" class="file-input w-full" oninput={handleInputFile} />
+		<input type="file" class="file-input m-2" oninput={handleInputFile} />
 	</div>
 
-	<div class="flex flex-col gap-6">
+	<div class="flex flex-col gap-6 pt-2">
 		<div role="tablist" class="tabs-border tabs gap-2">
 			<button
 				role="tab"
