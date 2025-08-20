@@ -22,7 +22,6 @@
 			const [start, end] = indices[index]
 			const nextStart = index === len - 1 ? undefined : indices[index + 1][0]
 			_spans.push({ value: value.slice(start, end + 1), isMatch: true })
-			console.log({ value, start, end, nextStart, index })
 			if (end < value.length) {
 				_spans.push({ value: value.slice(end + 1, nextStart), isMatch: false })
 			}
@@ -31,7 +30,6 @@
 	})
 </script>
 
-<span>{value}</span>
 {#each spans as { value, isMatch }}
 	<span class={isMatch ? 'rounded-xs bg-accent/50 text-accent-content' : ''}>
 		{value}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Mail, Phone } from '@lucide/svelte'
-	import type { Call } from './types'
+	import type { Call } from '$lib/types'
 	import type { Snippet } from 'svelte'
 
 	let { call, children }: { call: Call; children?: Snippet } = $props()
@@ -22,13 +22,13 @@
 </script>
 
 <div class="grid grid-cols-2 gap-2">
-	<a class="btn gap-4" href="tel:{call.to.tel}">
+	<a class="btn gap-4" href="tel:{call.to.phone}">
 		<Phone class="h-5" />
-		{call.to.tel}
+		{call.to.phone}
 	</a>
 	<a href={getCallMail(call)} class="btn">
 		<Mail class="h-5" />
-		Notifiy
+		Notifier par mail
 	</a>
 
 	{@render children?.()}

@@ -1,24 +1,42 @@
 export type User = {
 	name: string
-	tel: string
+	phone: string
 	birthday: string
+	email: string
 }
 
-export type Employ = Omit<User, 'birthday'> & {
-	email: string
+export type Address = {
+	name: string
+	street: string
+	zipCode: string
+	city: string
 }
 
 export type Call = {
 	subject: string
 	from: User
-	to: Employ
+	to: User
 }
 
 export type CallArchived = Call & {
 	createdAt: Date
 }
 
-export type Entry = {
-	user: User
-	employ: Employ
+export type EntryClient = {
+	type: 'client'
+	client: User
+	employ: User
 }
+
+export type EntryEmploy = {
+	type: 'employe'
+	employ: User
+}
+
+export type EntryAddress = {
+	type: 'address'
+	address: Address
+}
+
+export type Entry = EntryClient | EntryEmploy | EntryAddress
+export type EntryType = Entry['type']
