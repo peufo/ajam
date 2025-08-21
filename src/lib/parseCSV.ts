@@ -2,7 +2,7 @@ import type { Item, ItemEmploye } from './types'
 
 const colsHeader = {
 	type: 'Type part.',
-	id: 'N°int. partenaire',
+	id: 'N° int. partenaire',
 	firstName: 'Prénom',
 	lastName: 'Nom',
 	manager: 'Coll.resp.',
@@ -30,15 +30,13 @@ export function parseCSV(content: string): Item[] {
 	const [firstRow, ...rows] = content.split('\n')
 	const headers = firstRow.split(';')
 	const cols = Object.entries(colsHeader).reduce(
-		(acc, [key, label]) => ({
-			...acc,
-			[key]: headers.indexOf(label)
-		}),
+		(acc, [key, label]) => {
+			const index = headers.indexOf(label)
+			if (index === -1) throw new Error(`Header "${label}" not found`)
+			return { ...acc, [key]: index }
+		},
 		{} as Record<keyof typeof colsHeader, number>
 	)
-	if (cols.type === -1) {
-		throw new Error('Header "Type part." not found')
-	}
 	const useCell = (row: string[]) => (key: Column) => row[cols[key]]
 	const getName = (cell: Cell) => `${cell('firstName')} ${cell('lastName')}`.replace(/\(\w+\) /, '')
 
