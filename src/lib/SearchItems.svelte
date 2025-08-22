@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte'
 
 	let { items, onSelectItem }: { items: Item[]; onSelectItem: (item: Item) => void } = $props()
+	let isFocus = $state(false)
 
 	const options: IFuseOptions<Item> = {
 		keys: ['client.name', 'client.phone', 'client.birthday', 'employe.name'],
@@ -33,7 +34,7 @@
 	onMount(() => {
 		function handleShortcut(event: KeyboardEvent) {
 			const { metaKey, ctrlKey, key } = event
-			if (key === 'Enter') {
+			if (isFocus && key === 'Enter') {
 				event.preventDefault()
 				onSelectItem(results[focusIndex].item)
 				return
@@ -50,7 +51,7 @@
 		}
 	})
 
-	const selectChange: Record<string, () => void> = {
+	const focusChange: Record<string, () => void> = {
 		ArrowUp: () => {
 			focusIndex = Math.max(0, focusIndex - 1)
 		},
@@ -60,9 +61,9 @@
 	}
 
 	function onkeydown(event: KeyboardEvent) {
-		if (selectChange[event.key]) {
+		if (focusChange[event.key]) {
 			event.preventDefault()
-			selectChange[event.key]()
+			focusChange[event.key]()
 		}
 	}
 </script>
@@ -73,6 +74,8 @@
 		<input
 			bind:this={searchInput}
 			oninput={(e) => searchClient(e.currentTarget.value)}
+			onfocus={() => (isFocus = true)}
+			onblur={() => (isFocus = false)}
 			{onkeydown}
 			type="search"
 			placeholder="Recherche"

@@ -18,10 +18,12 @@
 				return
 			}
 			if (key === 'i') {
+				event.preventDefault()
 				action = 'phoneIncoming'
 				return
 			}
 			if (key === 'o') {
+				event.preventDefault()
 				action = 'mailIncoming'
 			}
 		}
