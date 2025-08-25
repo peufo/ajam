@@ -42,6 +42,7 @@
 
 	function onSelectItem(item: Item) {
 		if (action === 'phoneIncoming') {
+			console.log(item)
 			phoneForm?.setItem(item)
 		}
 	}

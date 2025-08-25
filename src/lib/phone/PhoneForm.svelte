@@ -15,7 +15,7 @@
 			name: '',
 			phone: '',
 			birthday: '',
-			email: 'prout@gmail.com'
+			email: ''
 		}
 	}
 	let phone = $state(structuredClone(emptyPhone))
