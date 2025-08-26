@@ -9,17 +9,44 @@
 	let { items, onSelectItem }: { items: Item[]; onSelectItem: (item: Item) => void } = $props()
 	let isFocus = $state(false)
 
-	const options: IFuseOptions<Item> = {
+	const optionsClients: IFuseOptions<Item> = {
 		keys: ['client.name', 'client.phone', 'client.birthday', 'employe.name'],
 		includeMatches: true,
-		minMatchCharLength: 1,
+		minMatchCharLength: 2,
+		includeScore: true,
+		threshold: 0.6
+	}
+	const optionsEmployes: IFuseOptions<Item> = {
+		keys: [
+			'employe.name',
+			'employe.city',
+			'employe.street',
+			'employe.phone',
+			'employe.email',
+			'employe.jobGroup',
+			'employe.jobTitle'
+		],
+		includeMatches: true,
+		minMatchCharLength: 2,
 		includeScore: true,
 		threshold: 0.6
 	}
 
-	let fuse = new Fuse([], options)
+	const optionsAddresses: IFuseOptions<Item> = {
+		keys: ['address.name', 'address.zipCode', 'address.city', 'address.street'],
+		includeMatches: true,
+		minMatchCharLength: 2,
+		includeScore: true,
+		threshold: 0.6
+	}
+
+	let fuseClients = new Fuse([], optionsClients)
+	let fuseEmployes = new Fuse([], optionsEmployes)
+	let fuseAddresses = new Fuse([], optionsAddresses)
 	$effect(() => {
-		fuse.setCollection(items)
+		fuseClients.setCollection(items.filter(({ type }) => type === 'client'))
+		fuseEmployes.setCollection(items.filter(({ type }) => type === 'employe'))
+		fuseAddresses.setCollection(items.filter(({ type }) => type === 'address'))
 	})
 
 	let results = $state<FuseResult<Item>[]>([])
@@ -27,7 +54,12 @@
 	let focusIndex = $state(0)
 
 	function searchClient(value: string) {
-		results = fuse.search(value)
+		const clients = fuseClients.search(value)
+		const employes = fuseEmployes.search(value)
+		const addresses = fuseAddresses.search(value)
+		results = [...clients, ...employes, ...addresses].sort(
+			(a, b) => (a.score || 0) - (b.score || 0)
+		)
 		focusIndex = 0
 	}
 

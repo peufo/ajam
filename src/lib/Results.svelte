@@ -17,10 +17,12 @@
 </script>
 
 <div class="flex min-h-0 flex-col gap-4">
-	{#each results.slice(0, 20) as { matches, item }, index (item.id)}
+	{#each results.slice(0, 20) as { matches, item, score }, index (item.id)}
 		{@const isFocused = index === focusIndex}
 
-		<button
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div
 			onmouseenter={() => (focusIndex = index)}
 			onfocus={() => (focusIndex = index)}
 			onclick={() => onSelectItem(item)}
@@ -35,7 +37,7 @@
 			{:else if item.type === 'address'}
 				<ItemAddress {item} {matches} />
 			{/if}
-		</button>
+		</div>
 	{:else}
 		<div class="grid place-content-center opacity-40 bg-base-200 min-h-32 rounded-md font-light">
 			<span>Pas de résultat :(</span>

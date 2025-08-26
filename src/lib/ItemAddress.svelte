@@ -18,21 +18,21 @@
 	<Highlight key="address.name" value={address.name} {matches} />
 </h4>
 <div class="flex flex-wrap gap-2 text-xs">
-	{#if address.city || address.zipCode}
-		<div class="flex items-center gap-1">
-			<Building2 class="w-3 opacity-70" />
-			<div class="whitespace-nowrap">
-				<Highlight key="address.zipCode" value={address.zipCode} {matches} />
-				<span class="mx-1"></span>
-				<Highlight key="address.city" value={address.city} {matches} />
-			</div>
-		</div>
-	{/if}
 	{#if address.street}
 		<div class="flex items-center gap-1">
 			<Mailbox class="w-3 opacity-70" />
 			<div class="whitespace-nowrap">
 				<Highlight key="address.street" value={address.street} {matches} />
+			</div>
+		</div>
+	{/if}
+	{#if address.city || address.zipCode}
+		<div class="flex items-center gap-1">
+			<Building2 class="w-3 opacity-70" />
+			<div class="whitespace-nowrap">
+				<Highlight key="address.zipCode" value={address.zipCode} {matches} />
+				<span class="ml-1"></span>
+				<Highlight key="address.city" value={address.city} {matches} />
 			</div>
 		</div>
 	{/if}
