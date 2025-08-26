@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { Archive } from '@lucide/svelte'
-	import type { Phone, Item } from '$lib/types'
+	import type { Phone, Item, User } from '$lib/types'
 	import PhoneFormActions from './PhoneFormActions.svelte'
+
+	const emptyUser: User = {
+		name: '',
+		phone: '',
+		birthday: '',
+		email: '',
+		city: '',
+		street: '',
+		zipCode: ''
+	}
 
 	const emptyPhone: Phone = {
 		subject: '',
-		from: {
-			name: '',
-			phone: '',
-			birthday: '',
-			email: ''
-		},
-		to: {
-			name: '',
-			phone: '',
-			birthday: '',
-			email: ''
-		}
+		from: structuredClone(emptyUser),
+		to: structuredClone(emptyUser)
 	}
 	let phone = $state(structuredClone(emptyPhone))
 	let subjectInput = $state<HTMLTextAreaElement>()
@@ -37,7 +37,7 @@
 <form class="rounded-lg border border-base-200 p-4 shadow-xl">
 	<div class="flex flex-col gap-4">
 		<fieldset class="fieldset">
-			<legend class="fieldset-legend">Appelant</legend>
+			<legend class="fieldset-legend">Bénéficiaire</legend>
 			<div class="grid grid-cols-2 gap-2">
 				<input type="text" class="input" placeholder="Nom" bind:value={phone.from.name} />
 				<input type="tel" class="input" placeholder="Téléphone" bind:value={phone.from.phone} />
@@ -52,7 +52,7 @@
 		></textarea>
 
 		<fieldset class="fieldset">
-			<legend class="fieldset-legend">Destinataire</legend>
+			<legend class="fieldset-legend">Responsable</legend>
 			<input type="text" class="input w-full" placeholder="Nom" bind:value={phone.to.name} />
 		</fieldset>
 

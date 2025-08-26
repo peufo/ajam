@@ -28,7 +28,7 @@
 	</a>
 	<a href={getPhoneIncommingMail(phone)} class="btn">
 		<Mail class="h-5" />
-		Notifier par mail
+		{phone.to.email}
 	</a>
 
 	{@render children?.()}

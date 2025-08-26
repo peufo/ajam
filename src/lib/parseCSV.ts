@@ -14,7 +14,9 @@ const colsHeader = {
 	phone: 'Tél. priv.',
 	phone2: 'Téléphone prof.',
 	email: 'e-mail',
-	title: 'Titre'
+	title: 'Titre',
+	jobTitle: 'Titre prof.',
+	jobGroup: 'Groupe de profession'
 } satisfies Record<string, string>
 
 const valueToEntryType: Record<string, Item['type']> = {
@@ -38,7 +40,7 @@ export function parseCSV(content: string): Item[] {
 		{} as Record<keyof typeof colsHeader, number>
 	)
 	const useCell = (row: string[]) => (key: Column) => row[cols[key]]
-	const getName = (cell: Cell) => `${cell('firstName')} ${cell('lastName')}`.replace(/\(\w+\) /, '')
+	const getName = (cell: Cell) => `${cell('lastName')} ${cell('firstName')}`.replace(/\(\w+\) /, '')
 
 	const parser: { [T in Item['type']]: (cell: Cell, id: number) => Item & { type: T } } = {
 		employe: (cell, id) => ({
@@ -48,7 +50,12 @@ export function parseCSV(content: string): Item[] {
 				name: getName(cell),
 				email: cell('email'),
 				phone: cell('phone') || cell('phone2'),
-				birthday: cell('birthday')
+				birthday: cell('birthday'),
+				street: cell('street'),
+				zipCode: cell('zipCode'),
+				city: cell('city'),
+				jobTitle: cell('jobTitle'),
+				jobGroup: cell('jobGroup')
 			}
 		}),
 		address: (cell, id) => ({
@@ -68,13 +75,21 @@ export function parseCSV(content: string): Item[] {
 				name: getName(cell),
 				email: cell('email'),
 				phone: cell('phone').trim() || cell('phone2').trim(),
-				birthday: cell('birthday')
+				birthday: cell('birthday'),
+				street: cell('street'),
+				zipCode: cell('zipCode'),
+				city: cell('city')
 			},
 			employe: {
 				name: cell('manager').replace(/\(\w+\) /, ''),
 				email: '',
 				phone: '',
-				birthday: ''
+				birthday: '',
+				street: '',
+				zipCode: '',
+				city: '',
+				jobTitle: '',
+				jobGroup: ''
 			}
 		})
 	}

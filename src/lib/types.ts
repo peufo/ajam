@@ -3,6 +3,14 @@ export type User = {
 	phone: string
 	birthday: string
 	email: string
+	street: string
+	zipCode: string
+	city: string
+}
+
+export type Employe = User & {
+	jobTitle: string
+	jobGroup: string
 }
 
 export type Address = {
@@ -25,12 +33,12 @@ export type PhoneArchived = Phone & {
 export type ItemClient = {
 	type: 'client'
 	client: User
-	employe: User
+	employe: Employe
 }
 
 export type ItemEmploye = {
 	type: 'employe'
-	employe: User
+	employe: Employe
 }
 
 export type ItemAddress = {
