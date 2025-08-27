@@ -13,6 +13,7 @@ const colsHeader = {
 	birthday: 'Dat.naiss.',
 	phone: 'Tél. priv.',
 	phone2: 'Téléphone prof.',
+	phone3: 'Tél. mobil',
 	email: 'e-mail',
 	title: 'Titre',
 	jobTitle: 'Titre prof.',
@@ -49,7 +50,7 @@ export function parseCSV(content: string): Item[] {
 			employe: {
 				name: getName(cell),
 				email: cell('email'),
-				phone: cell('phone') || cell('phone2'),
+				phone: cell('phone') || cell('phone2') || cell('phone3'),
 				birthday: cell('birthday'),
 				street: cell('street'),
 				zipCode: cell('zipCode'),
@@ -74,7 +75,7 @@ export function parseCSV(content: string): Item[] {
 			client: {
 				name: getName(cell),
 				email: cell('email'),
-				phone: cell('phone').trim() || cell('phone2').trim(),
+				phone: cell('phone') || cell('phone2') || cell('phone3'),
 				birthday: cell('birthday'),
 				street: cell('street'),
 				zipCode: cell('zipCode'),
