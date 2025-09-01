@@ -50,7 +50,7 @@ export function parseCSV(content: string): Item[] {
 			employe: {
 				name: getName(cell),
 				email: cell('email'),
-				phone: cell('phone') || cell('phone2') || cell('phone3'),
+				phone: [cell('phone'), cell('phone2'), cell('phone3')].filter(Boolean).join(),
 				birthday: cell('birthday'),
 				street: cell('street'),
 				zipCode: cell('zipCode'),
@@ -75,7 +75,7 @@ export function parseCSV(content: string): Item[] {
 			client: {
 				name: getName(cell),
 				email: cell('email'),
-				phone: cell('phone') || cell('phone2') || cell('phone3'),
+				phone: [cell('phone'), cell('phone2'), cell('phone3')].filter(Boolean).join(),
 				birthday: cell('birthday'),
 				street: cell('street'),
 				zipCode: cell('zipCode'),
